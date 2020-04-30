@@ -238,3 +238,23 @@ alias clip='xclip -selection clipboard'
 
 ## Restart network manager
 alias renet="sudo service network-manager restart"
+
+## Move last downloaded
+function dwnld() {
+  local moveTo="."
+  local confirm="N"
+  local lastFile=$(ls -t $HOME/Downloads | head -1)
+
+  if [ -n "$1" ]; then
+    moveTo="$1"
+  fi
+
+  read "confirm?Move file ${lastFile} to ${moveTo}? [y/N] "
+
+  if [ "$confirm" = "y" ] || [ "$confirm" = "yes" ]; then
+    mv "$HOME/Downloads/${lastFile}" "${moveTo}"
+    echo "Move successful"
+  else
+    echo "File not moved"
+  fi
+}
